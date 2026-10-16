@@ -218,6 +218,15 @@ struct RepositoryWorkspace: View {
                 .disabled(!store.canGoForward)
                 .help("Forward")
             }
+            ToolbarItem(placement: .primaryAction) {
+                Button {
+                    Task { await store.reload() }
+                } label: {
+                    Label("Refresh", systemImage: "arrow.clockwise")
+                }
+                .disabled(store.loadState == .loading)
+                .help("Re-scan packages, manifests, catalogs, and icons from disk")
+            }
             // `.labelStyle(.titleAndIcon)` on Save keeps the dirty-count
             // badge visible at tight widths — otherwise the toolbar
             // collapses to icon-only and the count disappears.
